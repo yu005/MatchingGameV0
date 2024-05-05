@@ -5,28 +5,28 @@ namespace MatchingGame
 {
     public partial class Form1 : Form
     {
-        // ¬ö¿ı¹CÀ¸¤¤ªº«ö¶s¼Æ¶q©M¹Ï¤ù¼Æ¶q
+        // ç´€éŒ„éŠæˆ²ä¸­çš„æŒ‰éˆ•æ•¸é‡å’Œåœ–ç‰‡æ•¸é‡
         public static int totalImages = 6;
         public static int totalButtons = totalImages*2;
 
-        // ¬ö¿ı¹CÀ¸¤¤¤w¸g°t¹ï¦¨¥\ªº¹Ï¤ù¼Æ¶q
+        // ç´€éŒ„éŠæˆ²ä¸­å·²ç¶“é…å°æˆåŠŸçš„åœ–ç‰‡æ•¸é‡
         private int matchedCount = 0;
-        // ¬ö¿ı¹CÀ¸¤¤ªº¹Ï¤ù
+        // ç´€éŒ„éŠæˆ²ä¸­çš„åœ–ç‰‡
         private List<Image> gameImages = new List<Image>();
 
-        // ¬ö¿ı¹CÀ¸¤¤ªº«ö¶s
+        // ç´€éŒ„éŠæˆ²ä¸­çš„æŒ‰éˆ•
         private List<Button> buttons = new List<Button>();
 
-        // ¬ö¿ı¨Ï¥ÎªÌÂIÀ»ªº¨â­Ó«ö¶s
-        private  MatchingButton firstClickedButton = null;
-        private  MatchingButton secondClickedButton = null;
-        // ¬ö¿ı¨Ï¥ÎªÌÂIÀ»ªº«ö¶s¼Æ¶q
+        // ç´€éŒ„ä½¿ç”¨è€…é»æ“Šçš„å…©å€‹æŒ‰éˆ•
+        private  Button firstClickedButton = null;
+        private  Button secondClickedButton = null;
+        // ç´€éŒ„ä½¿ç”¨è€…é»æ“Šçš„æŒ‰éˆ•æ•¸é‡
         private int clicksCount = 0;
 
-        // «Å§i Timer ª«¥ó
+        // å®£å‘Š Timer ç‰©ä»¶
         private  Timer timer = new Timer();
 
-        // ¬ö¿ı¹CÀ¸¶}©l®É¶¡
+        // ç´€éŒ„éŠæˆ²é–‹å§‹æ™‚é–“
         private DateTime startTime;
         
         //
@@ -37,41 +37,41 @@ namespace MatchingGame
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Load += Form1_Load;
 
-            // ¸ü¤J¹CÀ¸¹Ï¤ù, ªì©l¤Æ«ö¶s
+            // è¼‰å…¥éŠæˆ²åœ–ç‰‡, åˆå§‹åŒ–æŒ‰éˆ•
             LoadGameImages();
             InitializeButtons();
 
-            // ³]©w timer ªº Tick ¨Æ¥óªº³B²z¨ç¦¡
+            // è¨­å®š timer çš„ Tick äº‹ä»¶çš„è™•ç†å‡½å¼
             timer.Tick += Timer_Tick;
         }
         //
         private void Form1_Load(object sender, EventArgs e)
         {
-            // ¬ö¿ı¹CÀ¸¶}©l®É¶¡
+            // ç´€éŒ„éŠæˆ²é–‹å§‹æ™‚é–“
             startTime = DateTime.Now; 
         }
 
         private void LoadGameImages()
         {
-            // ¤â°Ê±N¹Ï¤ù¥[¤J¨ì gameImages ¦Cªí¤¤
+            // æ‰‹å‹•å°‡åœ–ç‰‡åŠ å…¥åˆ° gameImages åˆ—è¡¨ä¸­
             gameImages.Add(Properties.Resources.Image1);
             gameImages.Add(Properties.Resources.Image2);
             gameImages.Add(Properties.Resources.Image3);
             gameImages.Add(Properties.Resources.Image4);
             gameImages.Add(Properties.Resources.Image5);
             gameImages.Add(Properties.Resources.Image6);
-            // TODO ®Ú¾Ú»İ­n¥[¤J§ó¦h¹Ï¤ù
+            // TODO æ ¹æ“šéœ€è¦åŠ å…¥æ›´å¤šåœ–ç‰‡
 
-            // ½T«O gameImages ¤¤¦³¨¬°÷ªº¹Ï¤ù¨Ñ¹CÀ¸¨Ï¥Î
+            // ç¢ºä¿ gameImages ä¸­æœ‰è¶³å¤ çš„åœ–ç‰‡ä¾›éŠæˆ²ä½¿ç”¨
             if (gameImages.Count < totalImages)
             {
-                MessageBox.Show("¹CÀ¸¹Ï¤ù¤£¨¬¡A½Ğ¥[¤J§ó¦h¹Ï¤ù¡C");
+                MessageBox.Show("éŠæˆ²åœ–ç‰‡ä¸è¶³ï¼Œè«‹åŠ å…¥æ›´å¤šåœ–ç‰‡ã€‚");
                 this.Close();
             }
            
         }
 
-        // ²£¥ÍÀH¾÷ªº¹Ï¤ù¯Á¤Ş
+        // ç”¢ç”Ÿéš¨æ©Ÿçš„åœ–ç‰‡ç´¢å¼•
         public static List<int> GenerateRandomImageIndexes()
         {
             List<int> CardIndexes = new List<int>();
@@ -96,17 +96,17 @@ namespace MatchingGame
             return randomIndexes;
         }
 
-        // ªì©l¤Æ¹CÀ¸¤¤ªº«ö¶s
+        // åˆå§‹åŒ–éŠæˆ²ä¸­çš„æŒ‰éˆ•
         private void InitializeButtons()
         {
-            // ²£¥ÍÀH¾÷ªº¹Ï¤ù¯Á¤Ş, ¨Ã¥B®Ú¾Ú³o¨Ç¯Á¤Ş¨Óªì©l¤Æ«ö¶s
+            // ç”¢ç”Ÿéš¨æ©Ÿçš„åœ–ç‰‡ç´¢å¼•, ä¸¦ä¸”æ ¹æ“šé€™äº›ç´¢å¼•ä¾†åˆå§‹åŒ–æŒ‰éˆ•
             List<int> randomIndexes = GenerateRandomImageIndexes();
-            // °ÊºA¥Í¦¨«ö¶s
+            // å‹•æ…‹ç”ŸæˆæŒ‰éˆ•
             for (int i = 0; i < totalButtons; i++)
             {
-                // ¨ú±o¹Ï¤ù¯Á¤Ş
+                // å–å¾—åœ–ç‰‡ç´¢å¼•
                 int cardIndex = randomIndexes[i];
-                // TODO: «Ø¥ß MatchingButton ª«¥ó, ³]©w«ö¶sªº¬ÛÃöÄİ©Ê(Tag, Location), ¨Æ¥ó³B²z¨ç¦¡
+                // TODO: å»ºç«‹ MatchingButton ç‰©ä»¶, è¨­å®šæŒ‰éˆ•çš„ç›¸é—œå±¬æ€§(Tag, Location), äº‹ä»¶è™•ç†å‡½å¼
                 Button button = new Button();
                 button.Size = new Size(100, 100);
                 //
@@ -115,27 +115,27 @@ namespace MatchingGame
                 this.Controls.Add(button);
                 button.Click += MatchingButton_Click;
 
-                // ±N«ö¶s¥[¤J¨ì buttons ¦Cªí¤¤
+                // å°‡æŒ‰éˆ•åŠ å…¥åˆ° buttons åˆ—è¡¨ä¸­
                 buttons.Add(button);
                 //
             }
         }
 
-        // «ö¶sªº Click ¨Æ¥ó³B²z¨ç¦¡
+        // æŒ‰éˆ•çš„ Click äº‹ä»¶è™•ç†å‡½å¼
         private void MatchingButton_Click(object sender, EventArgs e)
         {
-            // TODO - ­×§ï¬° MatchingButton ªº§PÂ_¤è¦¡
+            // TODO - ä¿®æ”¹ç‚º MatchingButton çš„åˆ¤æ–·æ–¹å¼
             Button btn = sender as Button;
             MessageBox.Show($"Button_CardID:{btn.Tag} Clicked");
         }
 
-        // Timer ªº Tick ¨Æ¥ó³B²z¨ç¦¡: ±N[³QÂIªº¨â­Ó«ö¶s]ªº¹Ï¤ùÂ½Âà¬°­I­±
+        // Timer çš„ Tick äº‹ä»¶è™•ç†å‡½å¼: å°‡[è¢«é»çš„å…©å€‹æŒ‰éˆ•]çš„åœ–ç‰‡ç¿»è½‰ç‚ºèƒŒé¢
         private void Timer_Tick(object sender, EventArgs e)
         {
-            // °±¤î timer
+            // åœæ­¢ timer
             timer.Stop();
 
-            // TODO: ±N[³QÂIªº¨â­Ó«ö¶s]ªº¹Ï¤ùÂ½Âà¬°­I­±
+            // TODO: å°‡[è¢«é»çš„å…©å€‹æŒ‰éˆ•]çš„åœ–ç‰‡ç¿»è½‰ç‚ºèƒŒé¢
 
 
             // Reset firstClickedButton and secondClickedButton
@@ -145,12 +145,12 @@ namespace MatchingGame
             clicksCount = 0;
         }
 
-        // ¹CÀ¸§¹¦¨
+        // éŠæˆ²å®Œæˆ
         private void GameCompleted()
         {
-            // TODO ­pºâ¥X¹CÀ¸§¹¦¨ªº¬í¼Æ
+            // TODO è¨ˆç®—å‡ºéŠæˆ²å®Œæˆçš„ç§’æ•¸
             int elapsedSeconds = 0;
-            MessageBox.Show("¹CÀ¸§¹¦¨¡I¨Ï¥Î¬í¼Æ¡G" + elapsedSeconds);
+            MessageBox.Show("éŠæˆ²å®Œæˆï¼ä½¿ç”¨ç§’æ•¸ï¼š" + elapsedSeconds);
             this.Close();
         }
     }

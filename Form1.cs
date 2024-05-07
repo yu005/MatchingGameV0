@@ -200,7 +200,9 @@ namespace MatchingGame
         private void GameCompleted()
         {
             // TODO 計算出遊戲完成的秒數
-            int elapsedSeconds = 0;
+            //int elapsedSeconds = 0;
+            int elapsedSeconds = (int)(DateTime.Now - startTime).TotalSeconds;
+
             MessageBox.Show("遊戲完成！使用秒數：" + elapsedSeconds);
             this.Close();
         }

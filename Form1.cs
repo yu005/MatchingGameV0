@@ -6,7 +6,7 @@ namespace MatchingGame
     public partial class Form1 : Form
     {
         // 紀錄遊戲中的按鈕數量和圖片數量
-        public static int totalImages = 6;
+        public static int totalImages = 12;
         public static int totalButtons = totalImages*2;
 
         // 紀錄遊戲中已經配對成功的圖片數量
@@ -18,8 +18,8 @@ namespace MatchingGame
         private List<Button> buttons = new List<Button>();
 
         // 紀錄使用者點擊的兩個按鈕
-        private  Button firstClickedButton = null;
-        private  Button secondClickedButton = null;
+        private  MatchingButton firstClickedButton = null;
+        private  MatchingButton secondClickedButton = null;//修改處
         // 紀錄使用者點擊的按鈕數量
         private int clicksCount = 0;
 
@@ -60,6 +60,12 @@ namespace MatchingGame
             gameImages.Add(Properties.Resources.Image4);
             gameImages.Add(Properties.Resources.Image5);
             gameImages.Add(Properties.Resources.Image6);
+            gameImages.Add(Properties.Resources.Image7);
+            gameImages.Add(Properties.Resources.Image8);
+            gameImages.Add(Properties.Resources.Image9);
+            gameImages.Add(Properties.Resources.Image10);
+            gameImages.Add(Properties.Resources.Image11);
+            gameImages.Add(Properties.Resources.Image12);
             // TODO 根據需要加入更多圖片
 
             // 確保 gameImages 中有足夠的圖片供遊戲使用
@@ -107,8 +113,8 @@ namespace MatchingGame
                 // 取得圖片索引
                 int cardIndex = randomIndexes[i];
                 // TODO: 建立 MatchingButton 物件, 設定按鈕的相關屬性(Tag, Location), 事件處理函式
-                Button button = new Button();
-                button.Size = new Size(100, 100);
+                MatchingButton button = new MatchingButton(Properties.Resources.DefaultImage, gameImages[cardIndex]);
+                //button.Size = new Size(100, 100);
                 //
                 button.Tag = cardIndex;
                 button.Location = new Point((i % 6) * 100 + 10, (i / 6) * 100 + 15);
@@ -125,8 +131,52 @@ namespace MatchingGame
         private void MatchingButton_Click(object sender, EventArgs e)
         {
             // TODO - 修改為 MatchingButton 的判斷方式
-            Button btn = sender as Button;
-            MessageBox.Show($"Button_CardID:{btn.Tag} Clicked");
+            //Button btn = sender as Button;
+            //MessageBox.Show($"Button_CardID:{btn.Tag} Clicked");
+            // 取得被點擊的按鈕
+            MatchingButton button = (MatchingButton)sender;
+
+            // 如果按鈕已經顯示, 或者使用者已經點擊了兩個按鈕, 則直接返回
+            if (button.isShowing() || clicksCount == 2)
+                return;
+
+            // 顯示按鈕的圖片, 並且增加 clicksCount
+            button.Show();
+            clicksCount++;
+
+            // 如果這是第一個被點擊的按鈕, 則將它記錄到 firstClickedButton
+            if (firstClickedButton == null)
+            {
+                firstClickedButton = button;
+            }
+            // 如果這是第二個被點擊的按鈕, 則將它記錄到 secondClickedButton, 並且啟動 timer
+            else if (secondClickedButton == null)
+            {
+                secondClickedButton = button;
+                // ...
+                if (firstClickedButton.Tag.ToString() == secondClickedButton.Tag.ToString())//修改處
+                {
+                    firstClickedButton.Enabled = false;
+                    secondClickedButton.Enabled = false;
+                    //
+                    matchedCount += 2;
+                    //
+                    firstClickedButton = null;
+                    secondClickedButton = null;
+                    clicksCount = 0;
+                    //
+                    if(matchedCount == totalButtons)
+                    {
+                        GameCompleted();
+                    }
+                }
+                else
+                {
+                    timer.Interval = 500;//0.5S
+                    timer.Start();
+                }
+            }
+
         }
 
         // Timer 的 Tick 事件處理函式: 將[被點的兩個按鈕]的圖片翻轉為背面
@@ -136,7 +186,8 @@ namespace MatchingGame
             timer.Stop();
 
             // TODO: 將[被點的兩個按鈕]的圖片翻轉為背面
-
+            firstClickedButton.Hide();
+            secondClickedButton.Hide();
 
             // Reset firstClickedButton and secondClickedButton
             firstClickedButton = null;
